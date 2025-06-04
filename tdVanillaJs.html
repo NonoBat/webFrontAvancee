@@ -14,7 +14,12 @@
         <h1>Vanilla JS Example</h1>
         <hr>
         <button id="fetch-users">Fetch Users</button>
-        <button id="filter">Gender filter</button>
+        <select id="gender-filter">
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
     </div>
     <table id="tbl-users">
         <thead>
@@ -43,7 +48,7 @@
         users.forEach(user => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><img src="${user.picture.thumbnail}" alt="User Photo"></td>
+                <td><img src="${user.picture.thumbnail}" alt=""></td>
                 <td>${user.name.first} ${user.name.last}</td>
                 <td>${user.email}</td>
                 <td>${user.phone}</td>
@@ -57,12 +62,29 @@
     }
     document.getElementById('fetch-users').addEventListener('click', fetchUsers);
 
+    // 4 - Filter users by gender after fetch
+    function filterByGender() {
+        const selectedGender = document.getElementById('gender-filter').value;
+        const rows = document.querySelectorAll('#tbl-users tbody tr');
+        
+        rows.forEach(row => {
+            const genderCell = row.querySelector('td:last-child').textContent;
+            // j'utilise les emojis pour déterminer le genre comme j'ai mis dans le tableau de base 
+            const userGender = genderCell === '🙍‍♂️' ? 'male' : 'female';
+            
+            if (selectedGender === 'all' || selectedGender === userGender) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    document.getElementById('gender-filter').addEventListener('change', filterByGender);
 
     // 2 - Add age column --- L50
     // 3 - Add gender column, with two different emojis --- L51
-
-
-    // 4 - Filter user by gender
+ 
     // 5 - Sort user by age
     // 6- Search user by name
     // 7 - Add users instead of replacing them.
