@@ -19,7 +19,6 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
         </select>
-        <button id="sort-age">Sort by Age</button>
     </div>
     <table id="tbl-users">
         <thead>
@@ -28,7 +27,7 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Tel</th>
-            <th>Age</th>
+            <th>Age <button id="sort-age" style="padding: 2px 4px; font-size: 12px;">⬆⬇</button></th>
             <th>Gender</th>
         </tr>
         </thead>
@@ -83,23 +82,23 @@
     document.getElementById('gender-filter').addEventListener('change', filterByGender);
     
     // 5 - Sort user by age
-    let isAscending = true;    
+    let isAscending = true;
+
     function sortByAge() {
         const tbody = document.querySelector('#tbl-users tbody');
-        const rows = Array.from(tbody.querySelectorAll('tr'));        
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
         rows.sort((a, b) => {
             const ageA = parseInt(a.querySelector('td:nth-child(5)').textContent);
             const ageB = parseInt(b.querySelector('td:nth-child(5)').textContent);
             return isAscending ? ageA - ageB : ageB - ageA;
         });
-        tbody.innerHTML = '';
-        rows.forEach(row => tbody.appendChild(row));
         isAscending = !isAscending;
-        const button = document.getElementById('sort-age');
-        button.textContent = isAscending ? 'Sort by Age ⬆️' : 'Sort by Age ⬇️';
+        document.getElementById('sort-age').textContent = isAscending ? '⬆' : '⬇';
+        
+        rows.forEach(row => tbody.appendChild(row));
     }
     document.getElementById('sort-age').addEventListener('click', sortByAge);
-
     
     // 6- Search user by name
     // 7 - Add users instead of replacing them.
