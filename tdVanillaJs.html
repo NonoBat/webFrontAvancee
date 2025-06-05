@@ -14,7 +14,11 @@
         <h1>Vanilla JS Example</h1>
         <hr>
         <button id="fetch-users">Fetch Users</button>
-        <button id="filter">Gender filter</button>
+        <select id="gender-filter">
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
     </div>
     <table id="tbl-users">
         <thead>
@@ -43,7 +47,7 @@
         users.forEach(user => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><img src="${user.picture.thumbnail}" alt="User Photo"></td>
+                <td><img src="${user.picture.thumbnail}" alt=""></td>
                 <td>${user.name.first} ${user.name.last}</td>
                 <td>${user.email}</td>
                 <td>${user.phone}</td>
@@ -57,13 +61,32 @@
     }
     document.getElementById('fetch-users').addEventListener('click', fetchUsers);
 
+    // 4 - Filter users by gender after fetch
+    function filterByGender() {
+        // je vais selectionner le genre choisi dans mon gender-filter
+        const selectedGender = document.getElementById('gender-filter').value;
+        const rows = document.querySelectorAll('#tbl-users tbody tr');
+        
+        rows.forEach(row => {
+            const genderSelection = row.querySelector('td:last-child').textContent;
+            // j'utilise les emojis pour déterminer le genre comme j'ai mis dans le tableau de base 
+            const userGender = genderSelection === '🙍‍♂️' ? 'male' : 'female';
+            if (selectedGender === 'all' || selectedGender === userGender) {
+                // si le genre choisi est égal au genre de la personne, je vais afficher la ligne
+                row.style.display = '';
+            } else {
+                // sinon je vais cacher la ligne du l'utilisateur qui n'est pas du genre choisi
+                row.style.display = 'none';
+            }
+        });
+    }
+    document.getElementById('gender-filter').addEventListener('change', filterByGender);
 
-    // 2 - Add age column --- L50
-    // 3 - Add gender column, with two different emojis --- L51
-
-
-    // 4 - Filter user by gender
     // 5 - Sort user by age
+    // 2 - Add age column 
+    // 3 - Add gender column, with two different emojis
+ 
+    
     // 6- Search user by name
     // 7 - Add users instead of replacing them.
 </script>
