@@ -19,7 +19,6 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
         </select>
-
     </div>
     <table id="tbl-users">
         <thead>
@@ -64,28 +63,30 @@
 
     // 4 - Filter users by gender after fetch
     function filterByGender() {
+        // je vais selectionner le genre choisi dans mon gender-filter
         const selectedGender = document.getElementById('gender-filter').value;
         const rows = document.querySelectorAll('#tbl-users tbody tr');
         
         rows.forEach(row => {
-            const genderCell = row.querySelector('td:last-child').textContent;
+            const genderSelection = row.querySelector('td:last-child').textContent;
             // j'utilise les emojis pour déterminer le genre comme j'ai mis dans le tableau de base 
-            const userGender = genderCell === '🙍‍♂️' ? 'male' : 'female';
-            
+            const userGender = genderSelection === '🙍‍♂️' ? 'male' : 'female';
             if (selectedGender === 'all' || selectedGender === userGender) {
+                // si le genre choisi est égal au genre de la personne, je vais afficher la ligne
                 row.style.display = '';
             } else {
+                // sinon je vais cacher la ligne du l'utilisateur qui n'est pas du genre choisi
                 row.style.display = 'none';
             }
         });
     }
-
     document.getElementById('gender-filter').addEventListener('change', filterByGender);
 
-    // 2 - Add age column --- L50
-    // 3 - Add gender column, with two different emojis --- L51
- 
     // 5 - Sort user by age
+    // 2 - Add age column 
+    // 3 - Add gender column, with two different emojis
+ 
+    
     // 6- Search user by name
     // 7 - Add users instead of replacing them.
 </script>
