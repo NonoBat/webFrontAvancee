@@ -46,7 +46,6 @@
         const users = data.results;
 
         const tbody = document.querySelector('#tbl-users tbody');
-        tbody.innerHTML = ''; 
 
         users.forEach(user => {
             const row = document.createElement('tr');
@@ -123,6 +122,8 @@
     document.getElementById('myInput').addEventListener('keyup', searchByName);
 
     // 7 - Add users instead of replacing them.
+
+
 </script>
 </body>
 </html>
